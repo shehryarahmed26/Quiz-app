@@ -76,8 +76,18 @@ function showresult () {
     let progresscircle =  document.getElementById('progressCircle')
     progresscircle.style.background=`conic-gradient(green ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
     if (per < 60) {
+        let message = document.querySelector('.result-message')
+        message.innerHTML = 'You Failed, <br> Try Again'
+        message.style.color = 'red';
         progresscircle.style.background=`conic-gradient(red ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
-        progressvalue.style.color="red"
+        progressvalue.style.color="red";
+    }
+    else if (per > 60) {
+        let message = document.querySelector('.result-message')
+        message.innerHTML = 'Congratulations, <br> You Passed'
+        message.style.color = 'green';
+        progresscircle.style.background=`conic-gradient(green ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
+        progressvalue.style.color="green";
     }
 }
 function restartQuiz() {
