@@ -70,25 +70,37 @@ function showresult () {
         highscore = score
         localStorage.setItem('highscore', highscore)
     }
-    let per = (score / questions.length) * 100
-    let progressvalue = document.querySelector('.progress-value')
-    progressvalue.innerHTML = `${per}%`;
-    let progresscircle =  document.getElementById('progressCircle')
-    progresscircle.style.background=`conic-gradient(green ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
-    if (per < 60) {
-        let message = document.querySelector('.result-message')
-        message.innerHTML = 'You Failed, <br> Try Again'
-        message.style.color = 'red';
-        progresscircle.style.background=`conic-gradient(red ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
-        progressvalue.style.color="red";
-    }
-    else if (per > 60) {
-        let message = document.querySelector('.result-message')
-        message.innerHTML = 'Congratulations, <br> You Passed'
-        message.style.color = 'green';
-        progresscircle.style.background=`conic-gradient(green ${per * 3.6}deg, rgb(197, 195, 195) 0deg)`;
-        progressvalue.style.color="green";
-    }
+    let startvalue = 0;
+    let per = (score / questions.length) * 100 
+    let message = document.querySelector('.result-message')
+    message.style.display = 'none'
+
+    let progress_bar = setInterval(() => {
+        startvalue++;
+        if (startvalue == per) {
+            message.style.display = 'block'
+            clearInterval(progress_bar)
+
+        }
+        let progressvalue = document.querySelector('.progress-value')
+        progressvalue.innerHTML = `${startvalue}%`;
+        let progresscircle =  document.getElementById('progressCircle')
+        progresscircle.style.background=`conic-gradient(green ${startvalue * 3.6}deg, rgb(197, 195, 195) 0deg)`;
+
+        if (startvalue < 60) {
+            message.innerHTML = 'You Failed, <br> Try Again'
+            message.style.color = 'red';
+            progresscircle.style.background=`conic-gradient(red ${startvalue * 3.6}deg, rgb(197, 195, 195) 0deg)`;
+            progressvalue.style.color="red";
+        }
+        else if (startvalue > 60) {
+            // let message = document.querySelector('.result-message')
+            message.innerHTML = 'Congratulations, <br> You Passed'
+            message.style.color = 'green';
+            progresscircle.style.background=`conic-gradient(green ${startvalue * 3.6}deg, rgb(197, 195, 195) 0deg)`;
+            progressvalue.style.color="green";
+        }
+    }, 20)
 }
 function restartQuiz() {
     let result = document.getElementById('result')
